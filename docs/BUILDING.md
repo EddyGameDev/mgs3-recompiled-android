@@ -124,6 +124,31 @@ is streamed in place for `sceCdRead`; saves go to `game/mc0/`.
 
 ## Troubleshooting
 
+- **Windows: `ninja: error: manifest 'build.ninja' still dirty after 100
+  tries` during CMake configure** (or `CMAKE_OBJECT_PATH_MAX` warnings) —
+  your checkout path is too long. Map a short drive letter and build from
+  there:
+
+  ```bat
+  subst X: "C:\long\path\to\mgs3-recompiled-android"
+  cd /d X:\android
+  gradlew assembleRelease
+  ```
+
+  Every path then stays well under the ~200 characters where ninja's
+  manifest stat/mtime handling becomes flaky. Remove later with
+  `subst X: /D`.
+
+  Additionally pass a FetchContent base directory **outside the repository**
+  (git-for-windows sees through subst drives and dies with
+  `fatal: '$GIT_DIR' too big` when cloning dependencies from inside a repo
+  whose real path is long):
+
+  ```gradle
+  // android/app/build.gradle, cmake arguments:
+  '-DFETCHCONTENT_BASE_DIR=C:/fcdeps/mgs3',
+  ```
+
 - **Game breaks after boot** — the analyzer emitted 30 speculative
   self-modifying-code patches (`[patches].instructions` in the TOML). Try
   disabling that section and re-running the recompiler.

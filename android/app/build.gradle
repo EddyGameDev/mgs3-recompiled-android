@@ -25,6 +25,11 @@ android {
                         // The generated MGS3 code contains multi-megabyte
                         // translation units; unity build would OOM clang.
                         '-DPS2X_ENABLE_RUNNER_UNITY_BUILD=OFF',
+                        // Keep FetchContent downloads OUTSIDE the repository:
+                        // git-for-windows dies with "'$GIT_DIR' too big" when
+                        // cloning from inside a repo whose real path is long
+                        // (it sees through subst drives too).
+                        '-DFETCHCONTENT_BASE_DIR=F:/fcdeps/mgs3',
                         '-DANDROID_CPP_FEATURES=rtti exceptions'
                 targets 'ps2EntryRunner'
             }
