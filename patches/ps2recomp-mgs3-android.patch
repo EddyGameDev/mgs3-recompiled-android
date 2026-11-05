@@ -1,5 +1,5 @@
 diff --git a/ps2xRuntime/src/lib/ps2_pad.cpp b/ps2xRuntime/src/lib/ps2_pad.cpp
-index 8590f14..a3b13ff 100644
+index 8590f14..b27e1ff 100644
 --- a/ps2xRuntime/src/lib/ps2_pad.cpp
 +++ b/ps2xRuntime/src/lib/ps2_pad.cpp
 @@ -25,6 +25,197 @@ namespace
@@ -70,7 +70,7 @@ index 8590f14..a3b13ff 100644
 +    // (active-low DualShock bitmask) and the 4 analog stick bytes.
 +    bool updateTouchOverlay(uint16_t &btnsOut, uint8_t *stickData)
 +    {
-+        const int touchCount = GetTouchCount();
++        const int touchCount = GetTouchPointCount();
 +        if (touchCount <= 0)
 +        {
 +            return false;
