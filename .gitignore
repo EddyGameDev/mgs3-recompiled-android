@@ -1,0 +1,44 @@
+# --- Build artifacts ---------------------------------------------------------
+_build/
+android/.gradle/
+android/build/
+android/app/build/
+android/app/.cxx/
+android/local.properties
+android/.idea/
+*.apk
+*.aab
+*.so
+
+# --- Game data: NEVER commit -------------------------------------------------
+# Disc images, boot executables, unpacked payloads, BIOS dumps, memory cards.
+# Everything the user provides from their own legally obtained disc.
+_game/
+*.iso
+*.ISO
+*.img
+*.cue
+*.chd
+*.mdf
+SLES_*
+SCUS_*
+SLPS_*
+SCES_*
+mgs3_main_payload*.bin
+MGS3_analysis.elf
+*.elf.bin
+mc0/
+memcard*/
+
+# --- Generated recompiled code ------------------------------------------------
+# Produced by ps2_recomp from the user's own disc; distribution not permitted.
+third_party/PS2Recomp/ps2xRuntime/include/ps2_recompiled_functions.h
+third_party/PS2Recomp/ps2xRuntime/include/ps2_recompiled_stubs.h
+third_party/PS2Recomp/ps2xRuntime/src/runner/*.cpp
+
+# --- Tooling -----------------------------------------------------------------
+__pycache__/
+*.pyc
+.vs/
+.vscode/
+.DS_Store

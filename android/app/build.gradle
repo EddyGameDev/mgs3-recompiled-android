@@ -1,0 +1,60 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.eddygamedev.mgs3recomp'
+    compileSdk 35
+    ndkVersion '28.2.13676358'
+
+    defaultConfig {
+        applicationId 'com.eddygamedev.mgs3recomp'
+        minSdk 28
+        targetSdk 35
+        versionCode 1
+        versionName '1.0.0'
+
+        externalNativeBuild {
+            cmake {
+                arguments '-DPS2X_BUILD_RECOMP=OFF',
+                        '-DPS2X_BUILD_ANALYZER=OFF',
+                        '-DPS2X_BUILD_TEST=OFF',
+                        '-DPS2X_BUILD_STUDIO=OFF',
+                        '-DPS2X_ENABLE_SCCACHE=OFF',
+                        // The generated MGS3 code contains multi-megabyte
+                        // translation units; unity build would OOM clang.
+                        '-DPS2X_ENABLE_RUNNER_UNITY_BUILD=OFF',
+                        '-DANDROID_CPP_FEATURES=rtti exceptions'
+                targets 'ps2EntryRunner'
+            }
+        }
+
+        ndk {
+            abiFilters 'arm64-v8a'
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path '../../third_party/PS2Recomp/CMakeLists.txt'
+            version '3.22.1'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}

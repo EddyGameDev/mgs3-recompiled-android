@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:label="MGS3 Recompiled"
+        android:hasCode="true"
+        android:largeHeap="true"
+        android:hardwareAccelerated="true">
+
+        <!-- Kotlin launcher: imports the user's own disc image, builds the
+             boot ELF on device, then hands off to the native runtime. -->
+        <activity
+            android:name=".LauncherActivity"
+            android:exported="true"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@android:style/Theme.Material.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Native runtime: raylib's ANativeActivity glue lives in
+             libps2EntryRunner.so and calls main(0, NULL); the runtime
+             resolves the boot ELF from app storage at startup. -->
+        <activity
+            android:name="android.app.NativeActivity"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|navigation"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="ps2EntryRunner" />
+        </activity>
+    </application>
+</manifest>
