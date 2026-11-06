@@ -1,3 +1,24 @@
+diff --git a/ps2xRuntime/CMakeLists.txt b/ps2xRuntime/CMakeLists.txt
+index 589d768..0a6d2c9 100644
+--- a/ps2xRuntime/CMakeLists.txt
++++ b/ps2xRuntime/CMakeLists.txt
+@@ -462,6 +462,16 @@ else()
+     )
+ endif()
+ 
++# Recompiled game code consists of gigantic machine-generated translation
++# units (some single functions exceed 10 MB of source). The default -O2
++# sends the optimiser into an hours-long blowup on these; -O1 keeps
++# compilation tractable while retaining most of the code quality.
++foreach(PS2X_RUNNER_SRC IN LISTS RUNNER_SRC_FILES)
++    set_source_files_properties("${PS2X_RUNNER_SRC}" PROPERTIES
++        COMPILE_OPTIONS "-O1"
++    )
++endforeach()
++
+ if(PS2X_ENABLE_RUNNER_UNITY_BUILD)
+     set_target_properties(ps2EntryRunner PROPERTIES
+         UNITY_BUILD ON
 diff --git a/ps2xRuntime/src/lib/ps2_pad.cpp b/ps2xRuntime/src/lib/ps2_pad.cpp
 index 8590f14..b27e1ff 100644
 --- a/ps2xRuntime/src/lib/ps2_pad.cpp
